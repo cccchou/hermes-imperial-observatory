@@ -18,7 +18,7 @@ tags: [claude-code, delegation, coding, agent-tool]
 ## 调用方式
 
 ```bash
-cd /mnt/d/hermes_output && /home/alex/.local/bin/claude -p "prompt" --output-format text --max-turns 5
+ claude -p "prompt" --output-format text --max-turns 5
 ```
 
 ## 模型选择
@@ -35,9 +35,7 @@ cd /mnt/d/hermes_output && /home/alex/.local/bin/claude -p "prompt" --output-for
 
 **Claude Code 内置能力已覆盖以下领域，无需外部 skill 注入：**
 - ACM 竞赛算法（DP/贪心/二分/图论/字符串）
-- 推荐系统模型（DIN/DIEN/SIM/DeepFM）
-- 量化金融数学（随机过程/概率/统计）
-- 大模型架构（Transformer/MoE/扩散模型）
+- 深度学习模型（Transformer/MoE/扩散模型）
 
 **不要浪费时间在 GitHub 搜索"Claude Code algorithm skills"**——已验证不存在专门的 ACM/算法 repo，Claude Code 自身能力足够。外部 repo 只提供流程包装（如测试先行），不增加算法知识。
 
@@ -53,7 +51,7 @@ cd /mnt/d/hermes_output && /home/alex/.local/bin/claude -p "prompt" --output-for
 
 **正确做法：heredoc**
 ```bash
-cat << 'PROMPT' | /home/alex/.local/bin/claude -p "$(cat)" --output-format text --max-turns 5
+cat << 'PROMPT' | claude -p "$(cat)" --output-format text --max-turns 5
 <prompt文本和代码>
 PROMPT
 ```
@@ -62,7 +60,7 @@ PROMPT
 
 当前主模型 deepseek-v4-pro 不支持多模态（image_url），`vision_analyze` 报 400。需要分析图片时，把本地文件路径直接传给 Claude Code：
 ```bash
-/home/alex/.local/bin/claude -p "分析这张图片：/path/to/image.jpg" --output-format text
+claude -p "分析这张图片：/path/to/image.jpg" --output-format text
 ```
 
 ## 代码来源声明（强制）
@@ -71,7 +69,7 @@ PROMPT
 
 ```
 ✍️ Agent直接手写    → Agent 自己写的
-🤖 Claude Code CLI  → 调用了 /home/alex/.local/bin/claude
+🤖 Claude Code CLI  → 调用了 claude
 🔀 delegate_task    → 委派给子智能体
 ```
 
@@ -82,7 +80,7 @@ PROMPT
 - Claude Code 输出直接引用给用户看，Agent 不逐行解释
 - 如果 Claude Code 出错，告诉用户错误信息 + 重试建议
 - 简单脚本（<30行）Agent 自己写，不调 Claude Code
-- 已验证可用：`/home/alex/.local/bin/claude` v2.1.141
+- 已验证可用：`claude` v2.1.141
 - 关联 skill：`coder` — 更完整的编码人格（ACM算法 + 工程纪律 + 输出规范）
 - **外网数据聚合**：terminal curl 超时时，用 execute_code + Python urllib 替代 → `references/execute-code-fallback.md`
 
@@ -91,7 +89,7 @@ PROMPT
 `hermes -p coder chat -q "..."` 可能因 API key 未从 .env 继承而报 401。修复：显式传入环境变量。
 
 ```bash
-DEEPSEEK_API_KEY=$(grep DEEPSEEK_API_KEY /home/alex/.hermes/.env | cut -d= -f2) hermes -p coder chat -q "..." --quiet
+DEEPSEEK_API_KEY=$(grep DEEPSEEK_API_KEY ~/.hermes/.env | cut -d= -f2) hermes -p coder chat -q "..." --quiet
 ```
 
 如果 coder profile 超时（>120s），说明任务太复杂或网络不稳 → 改用 heredoc 直接调 Claude Code CLI，不经过 profile。

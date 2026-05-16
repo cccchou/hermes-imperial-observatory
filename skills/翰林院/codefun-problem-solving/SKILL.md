@@ -67,7 +67,7 @@ Verify output matches expected.
 
 ## Output Directory
 
-**ALL output goes to `/mnt/d/hermes_output/YYYYMMDD/`** — date-based subdirectory. Never use flat `/mnt/d/hermes_output/` or `/home/alex/`.
+**ALL output goes to output directory in date-based subdirectories (`YYYYMMDD/`).**
 
 Example: today's outputs go to `/mnt/d/hermes_output/20260516/`.
 
