@@ -11,7 +11,7 @@ ChromaDB 向量检索 + NetworkX 知识图谱 + LLM 实体关系抽取
 依赖: pip install chromadb sentence-transformers networkx openai
 """
 
-# 完整源码见 /mnt/d/hermes_output/knowledge_graph_agent.py
+# 完整源码见 knowledge_graph_agent.py
 # 核心架构：
 #   EntityExtractor (LLM + regex fallback)
 #   RelationExtractor (LLM triplet + fallback co-type association)

@@ -51,7 +51,7 @@ From the page snapshot, capture:
 
 ### Step 5: Create Solution Template
 
-Save to `/mnt/d/hermes_output/YYYYMMDD/PXXXX_<problem_name>.py` (date folder convention — see Output Directory). Include:
+Save to output directory `YYYYMMDD/PXXXX_<problem_name>.py` (date folder convention — see Output Directory). Include:
 1. **Header comment block**: problem metadata (source, company, difficulty, limits)
 2. **Full problem description** as comments (all sections: preprocessing, model, optimizer, early-stopping, inference)
 3. **Input/output format** with example
@@ -60,16 +60,16 @@ Save to `/mnt/d/hermes_output/YYYYMMDD/PXXXX_<problem_name>.py` (date folder con
 ### Step 6: Test Locally
 
 ```bash
-echo '<json_input>' | python3 /mnt/d/hermes_output/PXXXX_<name>.py
+echo '<json_input>' | python3 PXXXX_<name>.py
 ```
 
 Verify output matches expected.
 
 ## Output Directory
 
-**ALL output goes to output directory in date-based subdirectories (`YYYYMMDD/`).**
+**Save solutions to date-based subdirectories (`YYYYMMDD/`).**
 
-Example: today's outputs go to `/mnt/d/hermes_output/20260516/`.
+Example: today's outputs go to `YYYYMMDD/`.
 
 When writing a file, ALWAYS create the date directory first if it doesn't exist. The user explicitly asked for this organization so they can browse by date.
 
@@ -113,7 +113,7 @@ If user provides a failing test case after initial code output:
 3. Output corrected version — still pure code, no explanation
 
 ### Post-Mode: Save to Date Folder
-After the exam session, all codes go to `/mnt/d/hermes_output/YYYYMMDD/`.
+After the exam session, all codes go to date-named output subdirectory.
 
 ## Platform Notes
 
@@ -130,4 +130,4 @@ After the exam session, all codes go to `/mnt/d/hermes_output/YYYYMMDD/`.
 ## References
 
 - `references/adam-optimizer.md` — Adam & AdamW optimizer formulas, intuition, and interview talking points. Load when user asks about optimizers or when implementing ML-from-scratch problems.
-- `references/pdd-algorithm-cheatsheet.md` — PDD 笔试 50+ algorithm templates across 12 categories (DP, 二分, 贪心, 树, 图, etc.). Load when user asks for algorithm templates, cheatsheets, or PDD-specific prep. Points to the full runnable file at `/mnt/d/hermes_output/YYYYMMDD/PDD_algorithm_cheatsheet.py`.
+- `references/pdd-algorithm-cheatsheet.md` — PDD 笔试 50+ algorithm templates across 12 categories (DP, 二分, 贪心, 树, 图, etc.). Load when user asks for algorithm templates, cheatsheets, or PDD-specific prep. Points to the full runnable template file.

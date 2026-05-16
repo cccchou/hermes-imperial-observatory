@@ -2,7 +2,7 @@
 
 ## 问题
 
-WSL 环境下 `terminal` curl 命令经常超时（30s 硬限制），尤其访问 HN Firebase API、Reddit JSON API 等境外服务时。
+受限环境 环境下 `terminal` curl 命令经常超时（30s 硬限制），尤其访问 HN Firebase API、Reddit JSON API 等境外服务时。
 
 ## 方案
 

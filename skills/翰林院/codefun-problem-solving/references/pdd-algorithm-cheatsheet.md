@@ -1,6 +1,6 @@
 # PDD 笔试算法模板速查
 
-Full template file: `/mnt/d/hermes_output/20260516/PDD_algorithm_cheatsheet.py`
+Full template: `PDD_algorithm_cheatsheet.py`
 Last updated: 2026-05-16
 
 ## 50+ 模板覆盖 12 大类
