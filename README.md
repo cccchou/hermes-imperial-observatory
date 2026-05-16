@@ -1,57 +1,44 @@
-# 🔭 司天监 · Hermes Agent 六部协作框架
+# 🔭 司天监 · AI 科研助手
 
-> *「仰观天文，俯察地理，六官各司其职，日复一日，未尝懈怠。」*
->
-> 以明代司天监官制为纲，六位 AI Agent 各守其位，构建全自动学术研究流水线。
-> 每日 07:00 至 14:00，七小时内完成文献搜录、知识建库、交叉验证、代码执行、报告生成。
+> 一个基于 Hermes Agent 的全自动学术论文追踪与知识管理工具。六个 AI Agent 按固定时刻表协作，自动完成文献搜录、知识建库、交叉验证、代码执行、日报生成。
 
 ---
 
-## 🏛️ 架构
+## 这是什么？
+
+每天清晨到下午，六位 AI Agent 自动接力工作：
 
 ```
-                         ┌──────────────────┐
-                         │   监正 · Advisor │  ← 07:00 读邮件，制定当日计划
-                         └────────┬─────────┘
-                                  │ TASKS.md
-          ┌───────────────────────┼───────────────────────┐
-          ▼                       ▼                       ▼
-┌─────────────────┐   ┌─────────────────┐   ┌─────────────────┐
-│ 灵台郎 · Researcher│   │ 主簿 · Wiki     │   │ 五官正 · Summarizer│
-│ 08:00 搜录论文    │   │ 08:30 建知识页   │   │ 09:00 交叉校验    │
-└────────┬────────┘   └────────┬────────┘   └────────┬────────┘
-         │                     │                     │
-         └─────────────────────┼─────────────────────┘
-                               │ context_from 全链串联
-                               ▼
-                    ┌─────────────────────┐
-                    │ 挈壶正 · Executor    │  ← 10:00 执行代码
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │ 司历 · Reporter      │  ← 14:00 生成日报
-                    └─────────────────────┘
+07:00  读邮件 → 制定当日计划
+08:00  搜 arXiv、Google Scholar → 找新论文
+08:30  建知识库页面 → 存档
+09:00  交叉校验 → 去重补漏
+10:00  跑代码 → 复现实验
+14:00  出日报 → 汇总推送
 ```
 
----
-
-## 👥 六部职官
-
-| 官职 | Agent | 时辰 | 职责 | 产出 |
-|------|-------|------|------|------|
-| **监正** | `advisor` | 辰时 (07:00) | 批阅邮件，洞察全局，制定一日方略 | `TASKS.md` |
-| **灵台郎** | `researcher` | 辰时三刻 (08:00) | 遍搜 arXiv、Scholar，博采众长 | `raw/+RESEARCH.md` |
-| **主簿** | `wiki` | 巳时 (08:30) | 考据校勘，建档入库，垂范后世 | `wiki/` 知识页 |
-| **五官正** | `summarizer` | 巳时 (09:00) | 交叉引证，去芜存菁，明辨真伪 | `SUMMARY.md` |
-| **挈壶正** | `executor` | 巳时三刻 (10:00) | 算学推演，代码运行，验之以实 | `OUTPUT/` |
-| **司历** | `reporter` | 未时 (14:00) | 汇整奏报，上达天听，一日之功 | `REPORT.md` |
+你睡醒就能看报告，不用手动搜论文。
 
 ---
 
-## ⚙️ 调度
+## 👥 六位 Agent 各司其职
 
-以 Hermes Agent `cronjob` 驱动，`context_from` 串接上下环节：
+| Agent | 做什么 | 产出 |
+|-------|--------|------|
+| **advisor**（监正） | 读 arXiv 邮件，定当日关注方向 | `TASKS.md` |
+| **researcher**（灵台郎） | 搜 arXiv + Google Scholar | `RESEARCH.md` |
+| **wiki**（主簿） | 论文存档到 Obsidian 知识库 | `wiki/` 页面 |
+| **summarizer**（五官正） | 交叉引用，去重去噪 | `SUMMARY.md` |
+| **executor**（挈壶正） | 跑代码复现，验证结果 | `OUTPUT/` |
+| **reporter**（司历） | 汇总当天产出，生成日报 | `REPORT.md` |
+
+覆盖四大领域：**LLM · 广告/推荐算法 · 气象 AI · 量化金融 AI**。
+
+---
+
+## ⚙️ 怎么跑的
+
+用 Hermes Agent 的 `cronjob` 定时触发，`context_from` 把上一个 Agent 的输出喂给下一个：
 
 ```yaml
 advisor (07:00) → researcher (08:00) → wiki (08:30)
@@ -60,48 +47,47 @@ advisor (07:00) → researcher (08:00) → wiki (08:30)
                                       → reporter (14:00)
 ```
 
-四大领域定轨：**LLM · 广告算法 · 气象 AI · 量化 AI**，每日每领域至多三篇 TOP 论文入阁。
+每天自动运行，无需人工干预。
 
 ---
 
-## 📚 翰林院 · 辅助 Skill
+## 📚 翰林院 · 辅助工具
 
-除六部之外，尚有三名「翰林院编修」，供不时之需：
+三个独立 Skill，需要时手动触发：
 
-| 官职 | Skill | 说明 |
-|------|-------|------|
-| **算学博士** | `coder` | ACM 算法大神人格，Karpathy 纪律 + Addyosmani 工程，代码即文章 |
-| **行人司** | `claude-code-delegate` | 出使外邦（Claude Code），代行复杂编码、图片分析之事 |
-| **武举** | `codefun-problem-solving` | 应战校招笔试，CodeFun2000 题库，见题即破 |
+| Skill | 做什么 |
+|-------|--------|
+| **coder** | ACM 算法风格编码，解题、写项目 |
+| **claude-code-delegate** | 调用 Claude Code 处理复杂代码任务 |
+| **codefun-problem-solving** | 校招笔试题库刷题（CodeFun2000） |
 
 ---
 
 ## 📦 安装
 
 ```bash
-# 1. 克隆
 git clone git@github.com:cccchou/hermes-imperial-observatory.git
 
-# 2. 将 skills/ 下的目录复制到 Hermes skill 目录
-cp -r skills/司天监/* ~/.hermes/skills/autonomous-ai-agents/
-cp -r skills/司天监/* ~/.hermes/skills/research-group/
-cp -r skills/翰林院/* ~/.hermes/skills/software-development/
+# 复制 skill 到 Hermes 目录
+cp -r skills/司天监/* ~/.hermes/skills/
+cp -r skills/翰林院/* ~/.hermes/skills/
 
-# 3. 重启 Hermes
 hermes gateway restart
 ```
 
----
-
-## 📜 说明
-
-- 本框架已在 **上交大物理海洋博士** 的实际科研环境中稳定运行
-- 四大领域知识库持续积累，Obsidian 双向链接打通
-- 每日产出存储在 `/mnt/d/hermes_output/YYYYMMDD/`
-- 兼容 Hermes Agent v0.11+
+需要 Hermes Agent v0.11+。定时任务需自行配置 `cronjob`，参考各 `SKILL.md` 内的说明。
 
 ---
 
-> *「天行有常，不为尧存，不为桀亡。制天命而用之。」——《荀子·天论》*
->
-> 六部协作，日拱一卒，功不唐捐。
+## 📁 目录
+
+```
+skills/
+├── 司天监/
+│   ├── multi-agent-research-pipeline/   ← 六 Agent 流水线
+│   └── research-executor/               ← 代码执行员
+└── 翰林院/
+    ├── coder/                           ← 算法编码
+    ├── claude-code-delegate/            ← Claude Code 桥接
+    └── codefun-problem-solving/         ← 笔试刷题
+```
