@@ -89,7 +89,7 @@ claude -p "分析这张图片：/path/to/image.jpg" --output-format text
 `hermes -p coder chat -q "..."` 可能因 API key 未从 .env 继承而报 401。修复：显式传入环境变量。
 
 ```bash
-DEEPSEEK_API_KEY=$(grep DEEPSEEK_API_KEY ~/.hermes/.env | cut -d= -f2) hermes -p coder chat -q "..." --quiet
+API_KEY=$(grep API_KEY ~/.env | cut -d= -f2) hermes -p coder chat -q "..." --quiet
 ```
 
 如果 coder profile 超时（>120s），说明任务太复杂或网络不稳 → 改用 heredoc 直接调 Claude Code CLI，不经过 profile。
